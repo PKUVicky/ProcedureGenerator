@@ -1,0 +1,15 @@
+#comment
+
+%name DistC2ClickOverall;
+
+%package com.yahoo.hstore;
+
+%type	simple;
+
+%table c2insights;
+
+%timewindow	startTime >= endTime <=;
+
+%select SUM(totalc) AS total ~ SUM(tarc) AS targeted;
+
+%where woeid#woeid=? ~ segId#cast(dmp_value_lookup(segId, ?, '|', 0) as Integer)>0/prodId#cast(dmp_value_lookup(prodId, ?, '|', 0) as Integer)>0 ~ sellerId#sellerId=? ~ deviceId#deviceId=?;

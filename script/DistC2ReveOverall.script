@@ -1,0 +1,19 @@
+#comment
+
+%name DistC2ReveOverall;
+
+%package com.yahoo.hstore;
+
+%type	simple;
+
+%table c2insights;
+
+%timewindow	startTime >= endTime <=;
+
+%select SUM(totalPaidForI+totalPaidForC+totalPaidForV) AS total ~ SUM(tarPaifForI+tarPaidForC+tarPaidForV) AS targeted ~ SUM(SUM(totalPaidForI+totalPaidForC+totalPaidForV)-SUM(tarPaidForI+tarPaidForC+tarPaidForV)) AS untargeted;
+
+#%constwhere sellerId#sellerId=?;
+
+%where woeid#woeid=? ~ segId#cast(dmp_value_lookup(segId, ?, '|', 0) as Integer)>0/prodId#cast(dmp_value_lookup(prodId, ?, '|', 0) as Integer)>0 ~ sellerId#sellerId=? ~ deviceId#deviceId=?;
+
+
